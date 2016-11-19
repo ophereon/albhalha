@@ -1,0 +1,360 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Sheikah Transliterator</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="stylesheet" href="css/Albhalha.css">
+  <style>
+  body {
+		//background-image: url("bg.png");
+  	//background-repeat: repeat;
+		background-color: #200000;
+		color: white;
+	}
+	#page {
+		width: 100vw;
+		height: 100vh;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+	#page #container {
+		width: 75vw;
+		height: 75vh;
+		margin: 12.5vh 12.5vw;
+	}
+	#header {
+		width: inherit;
+		height: 15vh;
+		font-size: 5vw;
+	}
+	#header div {
+		width: calc(75vw / 22.1);
+		float: left;
+		height: 15vh;
+		text-align: center;
+		line-height: 15vh;
+		font-family: 'Lucida Console';
+	  text-transform: uppercase;
+	  -webkit-font-smoothing: none;
+	  color: #bcf7ff;
+	  text-shadow: 0 0 0.5em #ffffff;
+		font-weight: bold;
+	}
+	#header .sheikah {
+		font-family: Albhalha;
+		font-size: 0.7em;
+		line-height: 14.8vh;
+	}
+	#text {
+		width: inherit;
+		height: 30vh;
+		margin: 5vh 0;
+	}
+	#text #latin {
+		width: inherit;
+		height: 15vh;
+	}
+	#text #latin input {
+		width: inherit;
+		height: 15vh;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		text-align: center;
+		color: white;
+		font-size: 24px;
+	}
+	#text #albhalha {
+		width: inherit;
+		height: 15vh;
+		font-family: Albhalha;
+	  font-size: 24px;
+	  letter-spacing: 0.0em;
+	  -webkit-font-smoothing: none;
+	  color: #ffffff;
+		text-align: center;
+	  text-shadow: 0 0 0.5em #ffffff;
+	  margin: 0;
+	  padding: 0;
+		overflow: hidden;
+		line-height: 3.75vh;
+	}
+	#buttons {
+		width: inherit;
+		height: 10vh;
+		text-align: center;
+		font-size: 12px;
+		margin-top: 15vh;
+	}
+	#buttons input {
+		font-family: sans-serif;
+		height: 5vh;
+		width: 30vw;
+		margin: 2.5vh 2vw;
+		padding: 0;
+		border: 1px solid rgba(24,177,243,0.5);
+		box-shadow: 0 0 10px rgba(24,177,243,0.5);
+		background: transparent;
+		color: #ffffff;
+		line-height: 0vh;
+		font-size: 1.25em;
+		cursor: pointer;
+	}
+	#buttons input:hover {
+		font-family: Albhalha;
+	  letter-spacing: 0.15em;
+		font-size: 0.8em;
+		text-shadow: 0 0 0.5em #fff;
+		box-shadow: 0 0 10px rgba(255,255,255,1);
+	}
+	#popup {
+		background-color: rgba(0,0,0,0.5);
+		width: 100vw;
+		height: 100vh;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		display: none;
+	}
+	#popup #container {
+			background-color: rgba(21,10,1,1);
+			border: 1px solid rgba(255,255,255,0.75);
+			box-shadow: 0 0 10px rgba(255,255,255,1);
+			width: 75vw;
+			height: 75vh;
+			margin: 12.5vh 12.5vw;
+			position: relative;
+	}
+	#popup #top {
+		width: inherit;
+		height: 5vh;
+	}
+	#popup #title {
+		height: inherit;
+		width: calc(75vw - 5vh);
+		background-color: rgba(255,255,255,0);
+		border-bottom: 1px solid rgba(255,255,255,0.75);
+		box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+	}
+	#popup #title h2 {
+		font-family: sans-serif;
+	  text-transform: uppercase;
+	  font-size: 2vw;
+		line-height: 5vh;
+		text-align: center;
+	  letter-spacing: 0.1em;
+	  -webkit-font-smoothing: none;
+	  color: white;
+	  text-shadow: 0 0 0.5em #ffffff;
+		margin: 0;
+	}
+	#popup #close {
+		width: 5vh;
+		height: inherit;
+		position: absolute;
+		top: 0;
+		right: 0;
+		background-color: rgba(255,0,0,1);
+		color: #fff;
+		text-align: center;
+		line-height: 5vh;
+		font-family: Albhalha;
+		font-size: 1.4em;
+		cursor: pointer;
+	}
+	#popup #close:hover {
+	  text-shadow: 0 0 0.5em #fff;
+		font-size: 1.45em;
+		box-shadow: 0 0 10px rgba(255,255,255,1);
+	}
+	#popup #bottom {
+		width: inherit;
+		height: 70vh;
+	}
+	#popup #table {
+		width: 60vw;
+		height: 55;
+		margin: 7.5vh 7.5vw;
+	}
+	#popup #table table {
+		border: 0;
+		width: 100%;
+	}
+	#popup #table tr {
+		height: 4vh;
+	}
+	#popup #table .latinchar {
+		font-family: 'Lucida Console';
+		font-size: 1.5em;
+		font-weight: bold;
+		text-align: right;
+		padding-right: 0.5vw;
+		padding-top: 0.4vh;
+		line-height: 4vh;
+	}
+	#popup #table .albhalhachar {
+		font-family: Albhalha;
+		-webkit-font-smoothing: antialiased;
+		font-size: 1em;
+		text-align: left;
+		padding-top: 0;
+		padding-left: 0.5vw;
+		line-height: 4vh;
+	}
+	.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+		cursor: default;
+	}
+	#bg {
+		position: fixed;
+		bottom: 2px;
+		right: 2px;
+		color: #505050;
+		font-size: 0.5em;
+		font-family: Arial;
+	}
+  </style>
+</head>
+<body>
+	<div id="page">
+		<div id="container">
+			<div id="header" class="unselectable">
+				<div>S</div>
+				<div>H</div>
+				<div>E</div>
+				<div class="albhalha">I</div>
+				<div>K</div>
+				<div>A</div>
+				<div>H</div>
+				<div> </div>
+				<div>T</div>
+				<div>R</div>
+				<div>A</div>
+				<div>N</div>
+				<div>S</div>
+				<div>L</div>
+				<div>I</div>
+				<div>T</div>
+				<div>E</div>
+				<div>R</div>
+				<div>A</div>
+				<div>T</div>
+				<div>O</div>
+				<div>R</div>
+			</div>
+			<div id="text">
+				<div id="latin">
+					<input type="text" placeholder="type here" id="latininput" />
+				</div>
+				<div id="sheikah">
+					<span id="albhalhaoutput"></span>
+				</div>
+			</div>
+			<div id="buttons">
+				<input id="open" type="button" value="transliteration chart" />
+				<a href="albhalha.zip"><input type="button" value="download font" /></a>
+			</div>
+		</div>
+	</div>
+	<div id="popup">
+		<div id="container">
+				<div id="top">
+					<div id="title">
+						<h2 class="unselectable">Transliteration Chart</h2>
+					</div>
+					<div id="close" class="unselectable">X</div>
+				</div>
+				<div id="bottom">
+					<div id="table">
+						<table>
+							<tr>
+								<td class=latinchar>M</td><td class=albhalhachar>M</td>
+								<td class=latinchar>BH</td><td class=albhalhachar>V</td>
+						  </tr>
+							<tr>
+								<td class=latinchar>N</td><td class=sheikahchar>N</td>
+								<td class=latinchar>PH</td><td class=sheikahchar>F</td>
+						  </tr>
+							<tr>
+								<td class=latinchar>B</td><td class=sheikahchar>B</td>
+								<td class=latinchar>GH</td><td class=sheikahchar>H</td>
+						  </tr>
+							<tr>
+								<td class=latinchar>P</td><td class=sheikahchar>P</td>
+								<td class=latinchar>CH</td><td class=sheikahchar>X</td
+						  </tr>
+							<tr>
+								<td class=latinchar>D</td><td class=sheikahchar>D</td>
+								<td class=latinchar>LH</td><td class=sheikahchar>R</td>
+						  </tr>
+							<tr>
+								<td class=latinchar>T</td><td class=sheikahchar>T</td>
+								<td class=latinchar>CL</td><td class=sheikahchar>Q</td>
+						  </tr>
+							<tr>
+								<td class=latinchar>G</td><td class=sheikahchar>G</td>
+								<td class=latinchar>I</td><td class=sheikahchar>I</td>
+						  </tr>
+							<tr>
+								<td class=latinchar>C</td><td class=sheikahchar>C</td>
+								<td class=latinchar>E</td><td class=sheikahchar>E</td>
+						  </tr>
+							<tr>
+								<td class=latinchar>S</td><td class=sheikahchar>S</td>
+								<td class=latinchar>A</td><td class=sheikahchar>A</td>
+						  </tr>
+							<tr>
+								<td class=latinchar>L</td><td class=sheikahchar>L</td>
+								<td class=latinchar>O</td><td class=sheikahchar>O</td>
+						  </tr>
+						</table>
+					</div>
+				</div>
+		</div>
+	</div>
+	//<div id="bg">background by /u/g33k1nd159153</div>
+	<script type="text/javascript">
+		var input = document.getElementById('latininput');
+		var output = document.getElementById('albhalhaoutput');
+		input.onkeyup=function(){
+			output.innerHTML=input.value;
+		};
+		var popup = document.getElementById('popup');
+		var close = document.getElementById('close');
+		var open = document.getElementById('open');
+		open.onclick=function(){
+			popup.style.display = 'block';
+		};
+		close.onclick=function(){
+			popup.style.display = 'none';
+		};
+		(function update() {
+			var header = document.getElementById('header');
+			var children = header.children;
+			for (var i = 0; i < children.length; i++) {
+			  var child = children[i];
+			  child.classList.remove("albhalha");
+				if(Math.random()*10 < 2)
+			  	child.classList.add("albhalha");
+			}
+			setTimeout(update, 1500);
+		})();
+	</script>
+</body>
+</html>
